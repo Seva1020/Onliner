@@ -1,5 +1,5 @@
 .select-language {
-    width: 120px;
+    width: 120px !important;
     padding-top: 15px;
 }
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
@@ -12,5 +12,5 @@
     background-color: var(--primary-color);
 }
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
 }

@@ -4,6 +4,7 @@ import * as fromCategoryProducts from './reducers/category.reducers';
 
 export interface CategoryProductsState {
     products: categoryModels.CategoryProducts;
+    filters: categoryModels.FilterItem[];
 }
 
 export interface CategoryState {

@@ -11,16 +11,25 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { createTranslateLoader } from 'src/app/shared/utils/utils';
 import { HttpClient } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterComponent } from './components/filter/filter.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FilterItemComponent } from './components/filter-item/filter-item.component';
 
 @NgModule({
-    declarations: [CategoryComponent, CategoryItemComponent, FilterComponent],
+    declarations: [
+        CategoryComponent,
+        CategoryItemComponent,
+        FilterComponent,
+        FilterItemComponent,
+    ],
     imports: [
         CommonModule,
         CategoryRoutingModule,
         MatSelectModule,
+        MatCheckboxModule,
         FormsModule,
+        ReactiveFormsModule,
         StoreModule.forFeature(
             fromCategoryProducts.categoryFeatureKey,
             fromCategoryProducts.reducer,

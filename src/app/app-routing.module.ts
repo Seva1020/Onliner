@@ -56,6 +56,14 @@ const routes: Routes = [
             ),
     },
     {
+        path: ``,
+        loadChildren: () =>
+            import('./modules/catalog/catalog.module').then(
+                module => module.CatalogModule,
+            ),
+        pathMatch: 'full'
+    },
+    {
         path: `${constants.CATEGORY}`,
         loadChildren: () =>
             import('./modules/category/category.module').then(

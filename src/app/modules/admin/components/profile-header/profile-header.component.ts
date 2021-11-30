@@ -25,10 +25,7 @@ export class ProfileHeaderComponent implements OnInit, OnDestroy {
         .select(AdminSelectors.selectAvatar)
         .pipe(takeUntil(this.unsubscribe$));
 
-    readonly isReadyToDisplay$ = this.name$.pipe(
-        map(el => !!el),
-        takeUntil(this.unsubscribe$),
-    );
+    readonly isReadyToDisplay$ = this.name$.pipe(map(el => !!el));
 
     constructor(readonly store: Store<AdminState>) {}
 

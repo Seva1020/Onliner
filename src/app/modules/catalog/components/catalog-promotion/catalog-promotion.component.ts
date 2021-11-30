@@ -24,10 +24,7 @@ export class CatalogPromotionComponent implements OnInit, OnDestroy {
         .select(promotionsSelect.selectPromotions)
         .pipe(takeUntil(this.unsubscribe$));
 
-    readonly isReadyToDisplay$ = this.promotions$.pipe(
-        map(el => !!el),
-        takeUntil(this.unsubscribe$),
-    );
+    readonly isReadyToDisplay$ = this.promotions$.pipe(map(el => !!el));
 
     constructor(private readonly store: Store<CatalogState>) {}
 

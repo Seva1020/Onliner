@@ -93,6 +93,8 @@
         "EXPENSIVE": "Дорогие",
         "NEW": "Новые",
         "WITH_REVIEWS": "С отзывами",
-        "MONETARY_UNIT": "руб"
+        "MONETARY_UNIT": "руб",
+        "FROM": "от",
+        "TO": "до"
     }
 }

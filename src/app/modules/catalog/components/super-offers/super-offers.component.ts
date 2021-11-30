@@ -39,14 +39,11 @@ export class SuperOffersComponent implements OnInit, OnDestroy {
     readonly isReadyToDisplay$ = combineLatest([
         this.offers$,
         this.categoryOffers$,
-    ]).pipe(
-        map(el => el.every(el => el.length !== 0)),
-        takeUntil(this.unsubscribe$),
-    );
+    ]).pipe(map(el => el.every(el => el.length !== 0)));
 
     isOpenTabContent = false;
     toggleTabContentClass = true;
-    
+
     indexCategory = 0;
 
     constructor(private readonly store: Store<CatalogState>) {}

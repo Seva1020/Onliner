@@ -1,0 +1,22 @@
+<ul class="filter-item-wrap">
+    <li
+        class="filter-item"
+        *ngFor="let item of filterItemsData$ | async"
+        (click)="removeOne(item)"
+    >
+        <span *ngIf="!item.second_filter_key; else another"
+            >{{
+                item.first_filter_key.name
+                    ? item.first_filter_key.name
+                    : item.first_filter_key
+            }}
+        </span>
+        <ng-template #another>
+            <span
+                >{{ 'CATEGORY.FROM' | translate }} {{ item.first_filter_key }} -
+                {{ 'CATEGORY.TO' | translate }}
+                {{ item.second_filter_key }}</span
+            >
+        </ng-template>
+    </li>
+</ul>

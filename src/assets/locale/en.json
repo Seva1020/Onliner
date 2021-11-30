@@ -93,6 +93,8 @@
         "EXPENSIVE": "Expensive",
         "NEW": "New",
         "WITH_REVIEWS": "With reviews",
-        "MONETARY_UNIT": "rub"
+        "MONETARY_UNIT": "rub",
+        "FROM": "from",
+        "TO": "to"
     }
 }

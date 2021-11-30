@@ -60,10 +60,7 @@ export class CategoryItemComponent implements OnInit, OnDestroy {
 
     readonly filteredData$ = this.filteredDataSource$.asObservable();
 
-    readonly isReadyToDisplay$ = this.categoryProducts$.pipe(
-        map(el => !!el),
-        takeUntil(this.unsubscribe$),
-    );
+    readonly isReadyToDisplay$ = this.categoryProducts$.pipe(map(el => !!el));
 
     constructor(
         private readonly store: Store,

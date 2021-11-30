@@ -11,8 +11,6 @@ const Profile = require('./models/profile');
 const Avatar = require('./models/avatar');
 const CategoryProducts = require('./models/category-products');
 
-const { db } = require('./models/category-products');
-
 const app = express();
 
 mongoose

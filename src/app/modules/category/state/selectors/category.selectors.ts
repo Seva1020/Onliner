@@ -14,3 +14,13 @@ export const selectCategoryTitle = createSelector(
     selectCategoryProductsFeature,
     (state: CategoryProductsState) => state.products?.categoryTitle,
 );
+
+export const selectFilterProductsData = createSelector(
+    selectCategoryProductsFeature,
+    (state: CategoryProductsState) => state.products?.filter,
+);
+
+export const selectFilterData = createSelector(
+    selectCategoryProductsFeature,
+    (state: CategoryProductsState) => state.filters,
+);

@@ -32,10 +32,7 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
     readonly getAvatar$ = this.store
         .select(AdminSelect.selectAvatar)
         .pipe(takeUntil(this.unsubscribe$));
-    readonly isReadyToDisplay$ = this.selectId$.pipe(
-        map(el => !!el),
-        takeUntil(this.unsubscribe$),
-    );
+    readonly isReadyToDisplay$ = this.selectId$.pipe(map(el => !!el));
 
     constructor(
         readonly store: Store<AdminState>,

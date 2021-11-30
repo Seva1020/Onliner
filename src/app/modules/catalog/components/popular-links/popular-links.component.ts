@@ -24,17 +24,14 @@ export class PopularLinksComponent implements OnInit, OnDestroy {
         .select(LinksSelectors.selectLinks)
         .pipe(takeUntil(this.unsubscribe$));
 
-    readonly isReadyToDisplay$ = this.links$.pipe(
-        map(el => !!el),
-        takeUntil(this.unsubscribe$),
-    );
+    readonly isReadyToDisplay$ = this.links$.pipe(map(el => !!el));
 
     constructor(private readonly store: Store<CatalogState>) {}
 
     ngOnInit(): void {
         this.store.dispatch(LinksActions.getLinks());
     }
-    
+
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
