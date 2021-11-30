@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ShareService } from 'src/app/services/share/share.service';
 import { FilterItem } from '../../state/category.models';
+import * as CategorySelectors from '../../state/selectors/category.selectors';
+import * as CategoryActions from '../../state/actions/category.actions';
 
 @Component({
     selector: 'app-filter-item',
@@ -12,12 +14,14 @@ import { FilterItem } from '../../state/category.models';
 })
 export class FilterItemComponent implements OnDestroy {
     private readonly unsubscribe$ = new Subject();
-    readonly dataItems$ = this.shareService.getData().pipe(takeUntil(this.unsubscribe$));
+    readonly filterItemsData$ = this.store
+        .select(CategorySelectors.selectFilterData)
+        .pipe(takeUntil(this.unsubscribe$));
 
-    constructor(private readonly shareService: ShareService) {}
+    constructor(private readonly store: Store) {}
 
     removeOne(item: FilterItem): void {
-        this.shareService.sendDeleteItem(item);
+        this.store.dispatch(CategoryActions.deleteFilteItem(item));
     }
 
     ngOnDestroy(): void {

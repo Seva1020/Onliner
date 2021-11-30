@@ -1,16 +1,15 @@
 import {
     Component,
     OnDestroy,
-    OnInit,
     ChangeDetectionStrategy,
     ElementRef,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subject, zip } from 'rxjs';
-import { filter, map, take, takeUntil } from 'rxjs/operators';
-import { ShareService } from 'src/app/services/share/share.service';
+import { Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { FilterItem, FiltersData } from '../../state/category.models';
 import * as CategorySelectors from '../../state/selectors/category.selectors';
+import * as CategoryActions from '../../state/actions/category.actions';
 
 @Component({
     selector: 'app-filter',
@@ -18,65 +17,41 @@ import * as CategorySelectors from '../../state/selectors/category.selectors';
     styleUrls: ['./filter.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterComponent implements OnInit, OnDestroy {
+export class FilterComponent implements OnDestroy {
     private readonly unsubscribe$ = new Subject();
-    readonly selectedItemsArray$ = this.shareService.getData();
     private filterItemFromTo: FilterItem;
 
-    readonly filterItemsData$ = this.store
-        .select(CategorySelectors.selectFilterData)
+    readonly filterProductItemsData$ = this.store
+        .select(CategorySelectors.selectFilterProductsData)
         .pipe(
             filter(el => el !== undefined),
             map(el => el),
             takeUntil(this.unsubscribe$),
         );
 
-    readonly isReadyToDisplay$ = this.filterItemsData$.pipe(map(el => !!el));
+    readonly filterItemsData$ = this.store
+        .select(CategorySelectors.selectFilterData)
+        .pipe(takeUntil(this.unsubscribe$));
+
+    readonly isReadyToDisplay$ = this.filterProductItemsData$.pipe(
+        map(el => !!el),
+    );
 
     constructor(
         private readonly store: Store,
-        private readonly shareService: ShareService,
         private readonly elRef: ElementRef,
     ) {}
-
-    ngOnInit(): void {
-        zip(
-            this.shareService.getData(),
-            this.shareService.getDeleteItem(),
-        ).subscribe(([data, deletedItem]) => {
-            if (data === null) {
-                data = [];
-            }
-            const itemIndex = data.indexOf(deletedItem);
-            data.splice(itemIndex, 1);
-            this.shareService.sendData(data);
-        });
-    }
 
     onChecked(value: FiltersData, selected: boolean, id: string): void {
         const filterItem = {
             first_filter_key: value,
             id,
         };
-
-        this.selectedItemsArray$.pipe(take(1)).subscribe(filteredItemsArr => {
-            if (!filteredItemsArr) {
-                filteredItemsArr = [];
-            }
-            if (selected) {
-                filteredItemsArr.push(filterItem);
-                this.shareService.sendData(filteredItemsArr);
-            } else {
-                const itemFromFilteredArray = filteredItemsArr.find(
-                    item => item.id === filterItem.id,
-                );
-                const indexItem = filteredItemsArr.indexOf(
-                    itemFromFilteredArray,
-                );
-                filteredItemsArr.splice(indexItem, 1);
-            }
-            this.shareService.sendData(filteredItemsArr);
-        });
+        if (selected) {
+            this.store.dispatch(CategoryActions.setFilterItem(filterItem));
+        } else {
+            this.store.dispatch(CategoryActions.deleteFilteItem(filterItem));
+        }
     }
 
     onInput(id: string): void {
@@ -115,26 +90,12 @@ export class FilterComponent implements OnInit, OnDestroy {
     }
 
     onFilterFromTo(filterFromTo: FilterItem): void {
-        this.selectedItemsArray$.pipe(take(1)).subscribe(data => {
-            const resultItem = data.find(el => el.id === filterFromTo.id);
-            if (resultItem) {
-                (resultItem.first_filter_key = filterFromTo.first_filter_key),
-                    (resultItem.second_filter_key =
-                        filterFromTo.second_filter_key);
-            } else {
-                data.push(filterFromTo);
-            }
-            this.removeFromTo();
-            this.shareService.sendData(data);
-        });
+        this.store.dispatch(CategoryActions.setFilterItem(filterFromTo));
+        this.removeFromTo();
     }
 
     removeFromTo(): void {
-        let filteredArray: FilterItem[];
-        this.selectedItemsArray$.pipe(take(1)).subscribe(data => {
-            if (data === null) {
-                data = [];
-            }
+        this.filterItemsData$.subscribe(data => {
             const emptyElement = data.find(el => {
                 if (
                     (el.first_filter_key === '' &&
@@ -147,14 +108,10 @@ export class FilterComponent implements OnInit, OnDestroy {
                     return el;
                 }
             });
-
-            const emptyElementIndex = data.findIndex(el =>
-                emptyElement ? el.id === emptyElement.id : '',
-            );
-
-            if (emptyElementIndex > -1) {
-                filteredArray = data.splice(emptyElementIndex, 1);
-                this.shareService.sendData(filteredArray);
+            if (emptyElement) {
+                this.store.dispatch(
+                    CategoryActions.deleteFilteItem(emptyElement),
+                );
             }
         });
     }

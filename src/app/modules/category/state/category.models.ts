@@ -32,8 +32,11 @@ export interface CategoryProductData {
     name: string;
     description: string;
     image: string;
+    simCards: string;
     price: number;
     reviews: number;
+    inStock: number;
+    RAM: string;
     brand: string;
     popular: number;
     releaseDate: number;

@@ -16,7 +16,10 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="item" *ngFor="let item of filteredData$ | async">
+            <div
+                *ngFor="let item of filteredData$ | async as data"
+                class="item {{ item.brand }}"
+            >
                 <img src="{{ item.image }}" alt="item-img" />
                 <div class="item-description-block">
                     <h4 class="title">
@@ -32,7 +35,8 @@
                 </div>
                 <div class="item-price">
                     <span
-                        >{{ 'CATEGORY.PRICE' | translate }} {{ item.price }}
+                        >{{ 'CATEGORY.PRICE' | translate }}
+                        {{ item.price }}
                         {{ 'CATEGORY.MONETARY_UNIT' | translate }}.</span
                     >
                 </div>
@@ -46,4 +50,8 @@
 
 <ng-template #loading>
     <h3>Loading...</h3>
+</ng-template>
+
+<ng-template #empty>
+    <h3>There are no matches...</h3>
 </ng-template>

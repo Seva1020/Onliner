@@ -2,9 +2,9 @@
     <div class="filter-wrap">
         <div
             class="filter-products"
-            *ngIf="filterItemsData$ | async as filterItems"
+            *ngIf="filterProductItemsData$ | async as filterItems"
         >
-            <div *ngIf="selectedItemsArray$ | async as selectedItems">
+            <div *ngIf="filterItemsData$ | async as selectedItems">
                 <div
                     class="filter-wrap"
                     *ngFor="let filter of filterItems; let idx = index"
@@ -127,7 +127,7 @@
                                     appearance="fill"
                                     class="select-field_1"
                                 >
-                                    <mat-select>
+                                    <mat-select class="select">
                                         <mat-option
                                             *ngFor="
                                                 let filterItem of filter.selectItems
@@ -155,7 +155,7 @@
                                     appearance="fill"
                                     class="select-field_2"
                                 >
-                                    <mat-select>
+                                    <mat-select class="select">
                                         <mat-option
                                             *ngFor="
                                                 let filterItem of filter.selectItems

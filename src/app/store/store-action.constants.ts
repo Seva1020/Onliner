@@ -35,3 +35,6 @@ export const DELETE_ORDER_SUCCESS = `[Orders Component] ${DELETE_ORDER} Success`
 
 export const GET_CATEGORY_PRODUCTS = `[Category Products] Get Category Products`;
 export const GET_CATEGORY_PRODUCTS_SUCCESS = `${GET_CATEGORY_PRODUCTS} Success`;
+
+export const SET_FILTER_ITEM = `[Category Products] Set Filter Item`;
+export const DELETE_FILTER_ITEM = `[Category Products] Delete Filter Item`;

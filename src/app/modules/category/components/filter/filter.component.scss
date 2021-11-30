@@ -7,6 +7,7 @@
     &-products {
         padding: 10px 20px;
         color: var(--color-text);
+        border-right: 1px solid var(--border-color);
         &-title {
             font-size: 15px;
             color: #000;
@@ -31,6 +32,10 @@
                 display: flex;
                 .select-field_1 {
                     margin-right: 15px;
+                    width: 80px;
+                }
+                .select-field_2 {
+                    width: 80px;
                 }
             }
         }
@@ -40,16 +45,11 @@
     background-color: var(--primary-color);
 }
 
-::ng-deep .mat-form-field.mat-primary.mat-form-field-type-mat-select.mat-form-field-appearance-fill.mat-form-field-can-float.mat-form-field-has-label.mat-form-field-should-float {
+::ng-deep
+    .mat-form-field.mat-primary.mat-form-field-type-mat-select.mat-form-field-appearance-fill.mat-form-field-can-float.mat-form-field-has-label.mat-form-field-should-float {
     width: 20%;
 }
 
-::ng-deep .mat-form-field-infix.ng-tns-c87-2 {
-    width: 60px;
-}
-::ng-deep .mat-form-field-infix.ng-tns-c87-4 {
-    width: 60px;
-}
 :ng-deep .mat-form-field-flex {
     padding: 0px;
     border: 1px solid var(--border-color);
